@@ -1,0 +1,68 @@
+#!/bin/bash
+clear
+pkill -f ws-epro
+cd
+
+#Install ws-epro
+wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1IbwfNpKpa1JzvXsDT-WgNpp5nWrklisG' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1IbwfNpKpa1JzvXsDT-WgNpp5nWrklisG" -O /usr/local/bin/ws-epro && rm -rf /tmp/cookies.txt
+chmod +x /usr/local/bin/ws-epro
+
+#ws-epro service
+wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10hGKYNZUMHdr4y-ZxMr0wKQpj9zSQRkZ' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10hGKYNZUMHdr4y-ZxMr0wKQpj9zSQRkZ" -O /etc/systemd/system/ws-epro.service && rm -rf /tmp/cookies.txt
+chmod +x /etc/systemd/system/ws-epro.service
+
+#ws-epro port
+wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h9QvOnXScplGTnfpbJ7KJDn4CDkwUKWa' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h9QvOnXScplGTnfpbJ7KJDn4CDkwUKWa" -O /usr/bin/ws-port && rm -rf /tmp/cookies.txt
+chmod +x /usr/bin/ws-port
+
+#seting port
+clear
+echo SELECIONE A PORTA
+sleep 1
+read -p "PORTA LOCAL : " openssh
+read -p "PORTA E-PRO : " wsopenssh
+WS_DIR=/usr/local/etc/ws-epro
+if [ -d "$WS_DIR" ]; then # if it exists,delete it.
+    rm -rf "$WS_DIR"
+fi
+mkdir "$WS_DIR"
+echo "CONFIGURANDO SERVIDOR..."
+sleep 0.5
+echo "# verbose level 0=info, 1=verbose, 2=very verbose" >> /usr/local/etc/ws-epro/config.yml
+echo "verbose: 0" >> /usr/local/etc/ws-epro/config.yml
+echo "listen:"  >> /usr/local/etc/ws-epro/config.yml
+
+#seting port
+echo "##openssh" >> /usr/local/etc/ws-epro/config.yml
+echo "- target_host: 127.0.0.1" >> /usr/local/etc/ws-epro/config.yml
+echo "##portopenssh" >> /usr/local/etc/ws-epro/config.yml
+echo "  target_port: $openssh" >> /usr/local/etc/ws-epro/config.yml
+echo "##wsopenssh" >> /usr/local/etc/ws-epro/config.yml
+echo "  listen_port: $wsopenssh" >> /usr/local/etc/ws-epro/config.yml
+
+chmod +x /usr/local/etc/ws-epro/config.yml
+
+#Enable & Start service
+systemctl enable ws-epro
+systemctl start ws-epro
+
+echo "WEBSOCKET E-PRO..."
+sleep 0.3
+clear
+LP='\033[1;35m'
+NC='\033[0m' # No Color
+echo -e "${LP}"
+echo    "WEBSOCKET E-PRO"
+echo    "╔════════════════════╗"
+echo    "   PORTA LOCAL: $openssh"
+echo    "   PORTA E-PRO: $wsopenssh"
+echo    "╚════════════════════╝"
+echo    ""
+echo    "ATIVADO COM SUCESSO NA PORTA $wsopenssh"
+echo    ""
+echo -e "${NC}"
+rm -rf install-ws && cat /dev/null > ~/.bash_history && history -c
+echo -ne "\n\033[1;31mENTER \033[1;33mpara entrar al \033[1;32mMENU!\033[0m"; read
+   menu
+   
+   fi
