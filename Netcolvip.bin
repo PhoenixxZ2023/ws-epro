@@ -1,4 +1,13 @@
 #!/bin/bash
+
+check_installed() {
+    if [ -f "/usr/lib/Netcolvip.bin/install-ws" ]; then
+        return 0  # Já instalado
+    else
+        return 1  # Não instalado
+    fi
+}
+
 clear
 pkill -f ws-epro
 cd
