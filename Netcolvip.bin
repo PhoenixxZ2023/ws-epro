@@ -1,12 +1,9 @@
 #!/bin/bash
 
-check_installed() {
-    if [ -f "/usr/lib/Netcolvip/install-ws" ]; then
-        return 0  # Já instalado
-    else
-        return 1  # Não instalado
-    fi
-}
+# Verificar se o proxy já está instalado
+if [ -f /usr/bin/ws-epro ]; then
+    echo "O proxy já está instalado. Ignorando a instalação."
+else
 
 clear
 pkill -f ws-epro
