@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Verificar se o proxy já está instalado
-if [ -f /usr/bin/ws-epro ]; then
+if [ -f /usr/bin/ws-epro/Netcolvip.bin ]; then
     echo "O proxy já está instalado. Ignorando a instalação."
 else
 
