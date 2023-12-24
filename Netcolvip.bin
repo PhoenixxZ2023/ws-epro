@@ -1,12 +1,31 @@
 #!/bin/bash
+#19/12/2023
 
-# Verificar se o proxy já está instalado
-if [ -f /usr/bin/ws-epro/Netcolvip.bin ]; then
-    echo "O proxy já está instalado. Ignorando a instalação."
-else
+tput clear
 
-clear
-pkill -f ws-epro
+### MENU
+pag () {
+tput clear
+pres_adm
+echo -e "\e[1;32m           WS-EPRO INSTALLER \e[0m"
+msg -bar
+echo -e "\e[1;32m [1]\e[1;97m ATIVAR WS-EPRO CLOUDFLARE\e[0m"
+echo -e "\e[1;32m [2]\e[1;97m MODIFICAR PORTA WS-EPRO\e[0m"
+echo -e "\e[1;32m [3]\e[1;97m DESATIVAR WS-EPRO\e[0m"
+msg -bar
+echo -e "\e[1;32m [0]\e[1;31m SAIR DOS PROTOCOLOS\e[0m"
+msg -bar
+read -p " SELECIONE UMA OPÇÃO : " opci
+case $opci in
+
+#opcion 1
+1)
+tput clear
+pres_adm
+echo
+echo -e "\e[33m     >>> \e[1;32mINSTALANDO SERVIDOR PYTHON WS-EPRO \e[33m<<<\e[0m"
+sleep 0.3
+echo
 cd
 
 #Install ws-epro
@@ -22,17 +41,25 @@ wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com
 chmod +x /usr/bin/ws-port
 
 #seting port
-clear
-echo SELECIONE A PORTA
-sleep 1
-read -p "PORTA LOCAL : " openssh
-read -p "PORTA E-PRO : " wsopenssh
+#clear
+#pres_adm
+msg -bar
+echo
+echo -e "\e[1;97m >>>  SELEÇÃO DE PORTAS  <<< \e[0m"
+echo
+read -p " ✓ PORTA PARA PHYTON : " wsopenssh
+echo
+read -p " ✓ PORTA LOCAL (ssh|ssl|openvpn): " openssh
 WS_DIR=/usr/local/etc/ws-epro
 if [ -d "$WS_DIR" ]; then # if it exists,delete it.
     rm -rf "$WS_DIR"
 fi
+sleep 0.3
 mkdir "$WS_DIR"
-echo "CONFIGURANDO SERVIDOR..."
+echo
+msg -bar
+echo
+echo -e "\e[1;33m   CONFIGURANDO SERVIDOR ESPERE... \e[0m"
 sleep 0.5
 echo "# verbose level 0=info, 1=verbose, 2=very verbose" >> /usr/local/etc/ws-epro/config.yml
 echo "verbose: 0" >> /usr/local/etc/ws-epro/config.yml
@@ -48,27 +75,54 @@ echo "  listen_port: $wsopenssh" >> /usr/local/etc/ws-epro/config.yml
 
 chmod +x /usr/local/etc/ws-epro/config.yml
 
-#Enable & Start service
 systemctl enable ws-epro
 systemctl start ws-epro
 
-echo "WEBSOCKET E-PRO..."
 sleep 0.3
-clear
-LP='\033[1;35m'
-NC='\033[0m' # No Color
-echo -e "${LP}"
-echo    "WEBSOCKET E-PRO"
-echo    "╔════════════════════╗"
-echo    "   PORTA LOCAL: $openssh"
-echo    "   PORTA E-PRO: $wsopenssh"
-echo    "╚════════════════════╝"
-echo    ""
-echo    "ATIVADO COM SUCESSO NA PORTA $wsopenssh"
-echo    ""
-echo -e "${NC}"
+tput clear
+pres_adm
+echo
+echo -e "\e[1;97m          INSTALADO WS-EPRO (TURBONET-PRO) \e[0m"
+echo -e "\e[1;33m          PORTAS UTILIZADAS PARA CONEXÃO: \e[0m"
+echo -e "\e[33m          ╔═══════════════════════╗\e[0m"
+echo -e "\e[33m             Puerto Local SSH: \e[1;32m$openssh\e[0m"
+echo -e "\e[33m             Puerto Phyton: \e[1;32m$wsopenssh\e[0m"
+echo -e "\e[33m          ╚═══════════════════════╝\e[0m"
+echo
+msg -bar
+
+#####
 rm -rf install-ws && cat /dev/null > ~/.bash_history && history -c
-echo -ne "\n\033[1;31mENTER \033[1;33mpara entrar al \033[1;32mMENU!\033[0m"; read
-   menu
-   
-   fi
+msg -ne "Enter Para Continuar" && read enter
+pag
+;;
+
+#opcion 2
+2)
+ws-port && msg -ne "Enter Para Continuar" && read enter
+pag
+;;                                
+
+#opcion 3
+3)
+pkill -f ws-epro
+WS_DIR=/usr/local/etc/ws-epro
+if [ -d "$WS_DIR" ]; then # if it exists,delete it.
+    rm -rf "$WS_DIR"
+fi
+echo
+echo -e "\e[1;33m.  >>> PROTOCOLO WS-EPRO DESATIVADO... <<< \e[0m"
+msg -bar
+msg -ne "Enter Para Continuar" && read enter
+menu_inst
+;;
+
+#opcion salir
+0)
+return 0
+;;
+
+esac
+}
+
+pag
