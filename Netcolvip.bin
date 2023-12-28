@@ -6,15 +6,14 @@ tput clear
 ### MENU
 pag () {
 tput clear
-pres_adm
-echo -e "\e[1;32m           WS-EPRO INSTALLER \e[0m"
-msg -bar
-echo -e "\e[1;32m [1]\e[1;97m ATIVAR WS-EPRO CLOUDFLARE\e[0m"
-echo -e "\e[1;32m [2]\e[1;97m MODIFICAR PORTA WS-EPRO\e[0m"
-echo -e "\e[1;32m [3]\e[1;97m DESATIVAR WS-EPRO\e[0m"
-msg -bar
-echo -e "\e[1;32m [0]\e[1;31m SAIR DOS PROTOCOLOS\e[0m"
-msg -bar
+echo -e "\033[01;33m[1;32m            MENU WS-EPRO        \033[1;33m \033[0m"
+echo -e
+echo -e "\033[01;33m[1;32m [1]\033[1;33mATIVAR WS-EPRO CLOUDFLARE \33[0m"
+echo -e "\033[01;33m[1;32m [2]\033[1;33mMODIFICAR PORTA WS-EPRO \33[0m"
+echo -e "\033[01;33m[1;32m [3]\033[1;33mDESATIVAR WS-EPRO \33[0m"
+echo -e
+echo -e "\033[01;33m[1;32m [0]\033[1;33m SAIR DOS PROTOCOLOS\e[0m"
+echo -e
 read -p " SELECIONE UMA OPÇÃO : " opci
 case $opci in
 
