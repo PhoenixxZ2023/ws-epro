@@ -6,11 +6,11 @@ tput clear
 ### MENU
 pag () {
 tput clear
-echo -e "\033[01;33m[1;32m            MENU WS-EPRO        \033[1;33m \033[0m"
+echo -e "\033[1;33m[1;33m            MENU WS-EPRO        \033[1;33m \033[0m"
 echo -e
-echo -e "\033[01;33m[1;32m [1] \033[1;33mATIVAR WS-EPRO CLOUDFLARE \033[0m"
-echo -e "\033[01;33m[1;32m [2] \033[1;33mMODIFICAR PORTA WS-EPRO \033[0m"
-echo -e "\033[01;33m[1;32m [3] \033[1;33mDESATIVAR WS-EPRO \033[0m"
+echo -e "\033[1;33m[1;32m [1] \033[1;33mATIVAR WS-EPRO CLOUDFLARE \033[0m"
+echo -e "\033[1;33m[1;32m [2] \033[1;33mMODIFICAR PORTA WS-EPRO \033[0m"
+echo -e "\033[1;33m[1;32m [3] \033[1;33mDESATIVAR WS-EPRO \033[0m"
 echo -e
 echo -e "\033[01;33m[1;32m [0]\033[1;33mSAIR DOS PROTOCOLOS \033[0m"
 echo -e
@@ -20,9 +20,8 @@ case $opci in
 #opcion 1
 1)
 tput clear
-pres_adm
 echo
-echo -e "\e[33m     >>> \e[1;32mINSTALANDO SERVIDOR PYTHON WS-EPRO \e[33m<<<\e[0m"
+echo -e "\033[1;33m     >>> \033[1;32mINSTALANDO SERVIDOR PYTHON WS-EPRO \033[1;33m<<<\033[0m"
 sleep 0.3
 echo
 cd
@@ -41,10 +40,9 @@ chmod +x /usr/bin/ws-port
 
 #seting port
 #clear
-#pres_adm
 msg -bar
 echo
-echo -e "\e[1;97m >>>  SELEÇÃO DE PORTAS  <<< \e[0m"
+echo -e "\033[1;33m >>>  SELEÇÃO DE PORTAS  <<< \033[0m"
 echo
 read -p " ✓ PORTA PARA PHYTON : " wsopenssh
 echo
@@ -58,7 +56,7 @@ mkdir "$WS_DIR"
 echo
 msg -bar
 echo
-echo -e "\e[1;33m   CONFIGURANDO SERVIDOR ESPERE... \e[0m"
+echo -e "\033[1;33m   CONFIGURANDO SERVIDOR ESPERE... \033[0m"
 sleep 0.5
 echo "# verbose level 0=info, 1=verbose, 2=very verbose" >> /usr/local/etc/ws-epro/config.yml
 echo "verbose: 0" >> /usr/local/etc/ws-epro/config.yml
@@ -79,14 +77,13 @@ systemctl start ws-epro
 
 sleep 0.3
 tput clear
-pres_adm
 echo
-echo -e "\e[1;97m          INSTALADO WS-EPRO (TURBONET-PRO) \e[0m"
-echo -e "\e[1;33m          PORTAS UTILIZADAS PARA CONEXÃO: \e[0m"
-echo -e "\e[33m          ╔═══════════════════════╗\e[0m"
-echo -e "\e[33m             Puerto Local SSH: \e[1;32m$openssh\e[0m"
-echo -e "\e[33m             Puerto Phyton: \e[1;32m$wsopenssh\e[0m"
-echo -e "\e[33m          ╚═══════════════════════╝\e[0m"
+echo -e "\033[1;33m          INSTALADO WS-EPRO (TURBONET-PRO) \033[0m"
+echo -e "\033[1;33m          PORTAS UTILIZADAS PARA CONEXÃO: \033[0m"
+echo -e "\033[1;33m        ╔═══════════════════════╗\033[0m"
+echo -e "\033[1;33m             Puerto Local SSH: \033[1;32m$openssh\033[0m"
+echo -e "\033[1;33m             Puerto Phyton: \033[1;32m$wsopenssh\033[0m"
+echo -e "\033[1;33m          ╚═══════════════════════╝\033[0m"
 echo
 msg -bar
 
@@ -110,7 +107,7 @@ if [ -d "$WS_DIR" ]; then # if it exists,delete it.
     rm -rf "$WS_DIR"
 fi
 echo
-echo -e "\e[1;33m.  >>> PROTOCOLO WS-EPRO DESATIVADO... <<< \e[0m"
+echo -e "\033[1;33m.  >>> PROTOCOLO WS-EPRO DESATIVADO... <<< \033[0m"
 msg -bar
 msg -ne "Enter Para Continuar" && read enter
 menu_inst
