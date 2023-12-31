@@ -6,13 +6,12 @@ tput clear
 ### MENU
 pag () {
 tput clear
-echo -e "\033[1;33m[1;33m            MENU WS-EPRO        \033[1;33m \033[0m"
+echo -e "\033[1;33m           MENU WS-EPRO        \033[1;33m \033[0m"
 echo -e
-echo -e "\033[1;33m[1;32m [1] \033[1;33mATIVAR WS-EPRO CLOUDFLARE \033[0m"
-echo -e "\033[1;33m[1;32m [2] \033[1;33mMODIFICAR PORTA WS-EPRO \033[0m"
-echo -e "\033[1;33m[1;32m [3] \033[1;33mDESATIVAR WS-EPRO \033[0m"
-echo -e
-echo -e "\033[01;33m[1;32m [0]\033[1;33mSAIR DOS PROTOCOLOS \033[0m"
+echo -e "\033[1;33m[1] \033[1;33mATIVAR WS-EPRO CLOUDFLARE \033[0m"
+echo -e "\033[1;33m[2] \033[1;33mMODIFICAR PORTA WS-EPRO \033[0m"
+echo -e "\033[1;33m[3] \033[1;33mDESATIVAR WS-EPRO \033[0m"
+echo -e "\033[1;33m[0] \033[1;33mSAIR DOS PROTOCOLOS \033[0m"
 echo -e
 read -p " SELECIONE UMA OPÇÃO : " opci
 case $opci in
@@ -41,7 +40,6 @@ chmod +x /usr/bin/ws-port
 #seting port
 #clear
 msg -bar
-echo
 echo -e "\033[1;33m >>>  SELEÇÃO DE PORTAS  <<< \033[0m"
 echo
 read -p " ✓ PORTA PARA PHYTON : " wsopenssh
@@ -53,9 +51,7 @@ if [ -d "$WS_DIR" ]; then # if it exists,delete it.
 fi
 sleep 0.3
 mkdir "$WS_DIR"
-echo
 msg -bar
-echo
 echo -e "\033[1;33m   CONFIGURANDO SERVIDOR ESPERE... \033[0m"
 sleep 0.5
 echo "# verbose level 0=info, 1=verbose, 2=very verbose" >> /usr/local/etc/ws-epro/config.yml
@@ -84,7 +80,6 @@ echo -e "\033[1;33m        ╔════════════════�
 echo -e "\033[1;33m             Puerto Local SSH: \033[1;32m$openssh\033[0m"
 echo -e "\033[1;33m             Puerto Phyton: \033[1;32m$wsopenssh\033[0m"
 echo -e "\033[1;33m          ╚═══════════════════════╝\033[0m"
-echo
 msg -bar
 
 #####
@@ -115,7 +110,7 @@ menu_inst
 
 #opcion salir
 0)
-return 0
+menub2
 ;;
 
 esac
