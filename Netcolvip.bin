@@ -1,119 +1,121 @@
 #!/bin/bash
-#19/12/2023
+# Date: 19/12/2023
 
-tput clear
+# Define colors
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+RESET='\033[0m'
 
-### MENU
-pag () {
-tput clear
-echo -e "\033[1;33m           MENU WS-EPRO        \033[1;33m \033[0m"
-echo -e
-echo -e "\033[1;33m[1] \033[1;33mATIVAR WS-EPRO CLOUDFLARE \033[0m"
-echo -e "\033[1;33m[2] \033[1;33mMODIFICAR PORTA WS-EPRO \033[0m"
-echo -e "\033[1;33m[3] \033[1;33mDESATIVAR WS-EPRO \033[0m"
-echo -e "\033[1;33m[0] \033[1;33mSAIR DOS PROTOCOLOS \033[0m"
-echo -e
-read -p " SELECIONE UMA OPÇÃO : " opci
-case $opci in
-
-#opcion 1
-1)
-tput clear
-echo
-echo -e "\033[1;33m     >>> \033[1;32mINSTALANDO SERVIDOR PYTHON WS-EPRO \033[1;33m<<<\033[0m"
-sleep 0.3
-echo
-cd
-
-#Install ws-epro
-wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1IbwfNpKpa1JzvXsDT-WgNpp5nWrklisG' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1IbwfNpKpa1JzvXsDT-WgNpp5nWrklisG" -O /usr/local/bin/ws-epro && rm -rf /tmp/cookies.txt
-chmod +x /usr/local/bin/ws-epro
-
-#ws-epro service
-wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10hGKYNZUMHdr4y-ZxMr0wKQpj9zSQRkZ' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10hGKYNZUMHdr4y-ZxMr0wKQpj9zSQRkZ" -O /etc/systemd/system/ws-epro.service && rm -rf /tmp/cookies.txt
-chmod +x /etc/systemd/system/ws-epro.service
-
-#ws-epro port
-wget -q --show-progress --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h9QvOnXScplGTnfpbJ7KJDn4CDkwUKWa' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h9QvOnXScplGTnfpbJ7KJDn4CDkwUKWa" -O /usr/bin/ws-port && rm -rf /tmp/cookies.txt
-chmod +x /usr/bin/ws-port
-
-#seting port
-#clear
-msg -bar
-echo -e "\033[1;33m >>>  SELEÇÃO DE PORTAS  <<< \033[0m"
-echo
-read -p " ✓ PORTA PARA PHYTON : " wsopenssh
-echo
-read -p " ✓ PORTA LOCAL (ssh|ssl|openvpn): " openssh
-WS_DIR=/usr/local/etc/ws-epro
-if [ -d "$WS_DIR" ]; then # if it exists,delete it.
-    rm -rf "$WS_DIR"
-fi
-sleep 0.3
-mkdir "$WS_DIR"
-msg -bar
-echo -e "\033[1;33m   CONFIGURANDO SERVIDOR ESPERE... \033[0m"
-sleep 0.5
-echo "# verbose level 0=info, 1=verbose, 2=very verbose" >> /usr/local/etc/ws-epro/config.yml
-echo "verbose: 0" >> /usr/local/etc/ws-epro/config.yml
-echo "listen:"  >> /usr/local/etc/ws-epro/config.yml
-
-#seting port
-echo "##openssh" >> /usr/local/etc/ws-epro/config.yml
-echo "- target_host: 127.0.0.1" >> /usr/local/etc/ws-epro/config.yml
-echo "##portopenssh" >> /usr/local/etc/ws-epro/config.yml
-echo "  target_port: $openssh" >> /usr/local/etc/ws-epro/config.yml
-echo "##wsopenssh" >> /usr/local/etc/ws-epro/config.yml
-echo "  listen_port: $wsopenssh" >> /usr/local/etc/ws-epro/config.yml
-
-chmod +x /usr/local/etc/ws-epro/config.yml
-
-systemctl enable ws-epro
-systemctl start ws-epro
-
-sleep 0.3
-tput clear
-echo
-echo -e "\033[1;33m          INSTALADO WS-EPRO (TURBONET-PRO) \033[0m"
-echo -e "\033[1;33m          PORTAS UTILIZADAS PARA CONEXÃO: \033[0m"
-echo -e "\033[1;33m        ╔═══════════════════════╗\033[0m"
-echo -e "\033[1;33m             Puerto Local SSH: \033[1;32m$openssh\033[0m"
-echo -e "\033[1;33m             Puerto Phyton: \033[1;32m$wsopenssh\033[0m"
-echo -e "\033[1;33m          ╚═══════════════════════╝\033[0m"
-msg -bar
-
-#####
-rm -rf install-ws && cat /dev/null > ~/.bash_history && history -c
-msg -ne "Enter Para Continuar" && read enter
-pag
-;;
-
-#opcion 2
-2)
-ws-port && msg -ne "Enter Para Continuar" && read enter
-pag
-;;                                
-
-#opcion 3
-3)
-pkill -f ws-epro
-WS_DIR=/usr/local/etc/ws-epro
-if [ -d "$WS_DIR" ]; then # if it exists,delete it.
-    rm -rf "$WS_DIR"
-fi
-echo
-echo -e "\033[1;33m.  >>> PROTOCOLO WS-EPRO DESATIVADO... <<< \033[0m"
-msg -bar
-msg -ne "Enter Para Continuar" && read enter
-menu_inst
-;;
-
-#opcion salir
-0)
-menub2
-;;
-
-esac
+# Function to display the menu header
+display_header() {
+    clear
+    echo -e "${YELLOW}====================="
+    echo -e "   MENU WS-EPRO"
+    echo -e "=====================${RESET}"
+    echo
 }
 
-pag
+# Function to display the menu options
+display_menu() {
+    display_header
+    echo -e "${YELLOW}[${GREEN}1${YELLOW}]${RESET} ATIVAR WS-EPRO CLOUDFLARE"
+    echo -e "${YELLOW}[${GREEN}2${YELLOW}]${RESET} MODIFICAR PORTA WS-EPRO"
+    echo -e "${YELLOW}[${GREEN}3${YELLOW}]${RESET} DESATIVAR WS-EPRO"
+    echo -e "${YELLOW}[${GREEN}0${YELLOW}]${RESET} SAIR DOS PROTOCOLOS"
+    echo
+    read -p " SELECIONE UMA OPÇÃO : " option
+
+    case $option in
+        1) activate_ws_epro ;;
+        2) modify_ws_epro_port ;;
+        3) deactivate_ws_epro ;;
+        0) exit ;;
+        *) echo -e "Opção inválida. Tente novamente." ;;
+    esac
+
+    echo -ne "\nPressione Enter para continuar"
+    read -r enter
+    display_menu
+}
+
+# Function to install and activate WS-EPRO
+activate_ws_epro() {
+    display_header
+    echo -e "${YELLOW}     >>> ${GREEN}INSTALANDO SERVIDOR PYTHON WS-EPRO ${YELLOW}<<<${RESET}"
+    sleep 0.3
+    echo
+
+    # Download and install ws-epro
+    download_and_install "https://docs.google.com/uc?export=download&id=1IbwfNpKpa1JzvXsDT-WgNpp5nWrklisG" "/usr/local/bin/ws-epro"
+
+    # Download and install ws-epro service
+    download_and_install "https://docs.google.com/uc?export=download&id=10hGKYNZUMHdr4y-ZxMr0wKQpj9zSQRkZ" "/etc/systemd/system/ws-epro.service"
+
+    # Download and install ws-epro port script
+    download_and_install "https://docs.google.com/uc?export=download&id=1h9QvOnXScplGTnfpbJ7KJDn4CDkwUKWa" "/usr/bin/ws-port"
+
+    # Set port configurations
+    read -p " ✓ PORTA PARA PHYTON : " wsopenssh
+    read -p " ✓ PORTA LOCAL (ssh|ssl|openvpn): " openssh
+
+    WS_DIR="/usr/local/etc/ws-epro"
+    [ -d "$WS_DIR" ] && rm -rf "$WS_DIR"
+    sleep 0.3
+    mkdir -p "$WS_DIR"
+
+    # Create configuration file
+    cat <<EOF > "$WS_DIR/config.yml"
+# verbose level 0=info, 1=verbose, 2=very verbose
+verbose: 0
+listen:
+##openssh
+- target_host: 127.0.0.1
+##portopenssh
+  target_port: $openssh
+##wsopenssh
+  listen_port: $wsopenssh
+EOF
+
+    chmod +x "$WS_DIR/config.yml"
+
+    # Enable and start ws-epro service
+    systemctl enable ws-epro
+    systemctl start ws-epro
+
+    sleep 0.3
+    display_header
+    echo
+    echo -e "${YELLOW}          INSTALADO WS-EPRO (TURBONET-PRO) ${RESET}"
+    echo -e "${YELLOW}          PORTAS UTILIZADAS PARA CONEXÃO: ${RESET}"
+    echo -e "${YELLOW}        ╔═══════════════════════╗${RESET}"
+    echo -e "${YELLOW}             Puerto Local SSH: ${GREEN}$openssh${RESET}"
+    echo -e "${YELLOW}             Puerto Phyton: ${GREEN}$wsopenssh${RESET}"
+    echo -e "${YELLOW}          ╚═══════════════════════╝${RESET}"
+}
+
+# Function to download and install a file
+download_and_install() {
+    local download_url=$1
+    local install_path=$2
+
+    wget -q --show-progress --load-cookies /tmp/cookies.txt "$download_url" -O "$install_path" && rm -rf /tmp/cookies.txt
+    chmod +x "$install_path"
+}
+
+# Function to modify WS-EPRO port
+modify_ws_epro_port() {
+    ws-port
+    echo -ne "\nPressione Enter para continuar"
+    read -r enter
+}
+
+# Function to deactivate WS-EPRO
+deactivate_ws_epro() {
+    pkill -f ws-epro
+    WS_DIR="/usr/local/etc/ws-epro"
+    [ -d "$WS_DIR" ] && rm -rf "$WS_DIR"
+    echo -e "${YELLOW}.  >>> PROTOCOLO WS-EPRO DESATIVADO <<< ${RESET}"
+}
+
+# Main execution starts here
+display_menu
