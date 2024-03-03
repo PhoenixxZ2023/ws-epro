@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 pkill -f ws-epro
-echo INSTALANDO PYTHON NOVO
+echo "INSTALANDO PYTHON NOVO"
 sleep 1
 cd
 
@@ -20,7 +20,7 @@ chmod +x /usr/bin/ws-port
 # Função para definir a porta
 definir_porta() {
     clear
-    echo SELECIONE AS PORTAS
+    echo "SELECIONE AS PORTAS"
     sleep 1
     read -p "PORTA LOCAL : " openssh
     read -p "PORTA PYTHON : " wsopenssh
@@ -74,3 +74,6 @@ definir_porta() {
     echo    "---------------------------------------"
     echo    ""
     echo    "PARA MUDAR A PORTA, USE O
+}
+
+definir_porta
