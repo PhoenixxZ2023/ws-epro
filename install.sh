@@ -73,7 +73,7 @@ definir_porta() {
     echo    "WEBSOCKET SEM SER PLANO PRO CLOUDFLARE"
     echo    "---------------------------------------"
     echo    ""
-    echo    "PARA MUDAR A PORTA, USE O
+    echo    "PARA MUDAR A PORTA, USE O ws-port" 
 }
 
 definir_porta
