@@ -54,7 +54,7 @@ definir_porta() {
     LP='\033[1;35m'
     NC='\033[0m' # Sem Cor
     echo -e "${LP}"
-    echo    "
+    echo
     ░██╗░░░░░░░██╗░██████╗░░░░░░██████╗░██████╗░░█████╗░
     ░██║░░██╗░░██║██╔════╝░░░░░░██╔══██╗██╔══██╗██╔══██╗
     ░╚██╗████╗██╔╝╚█████╗░█████╗██████╔╝██████╔╝██║░░██║
@@ -72,7 +72,7 @@ definir_porta() {
     echo    ""
     echo    "WEBSOCKET SEM SER PLANO PRO CLOUDFLARE"
     echo    "---------------------------------------"
-    echo    ""
+    echo    
     echo    "PARA MUDAR A PORTA, USE O ws-port" 
 }
 
